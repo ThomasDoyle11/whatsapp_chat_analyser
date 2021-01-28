@@ -8,7 +8,7 @@ print("******************************\n")
 
 ################# USER DEFINED ##################
 
-file_name = "my_betrothed_20140316-20210125"
+file_name = "ganrer_20140723-20140807"
 
 root_dir = r"C:\Users\thoma\Documents\Python_Projects\ChatToCSV\ChatToCSV"
 

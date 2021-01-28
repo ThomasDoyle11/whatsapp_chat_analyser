@@ -20,8 +20,8 @@ files = os.listdir(root_dir + "/data/" + folder_to_merge + "/")
 
 print("Total of " + str(len(files)) + " files to be merged.")
 
-earliest_start_date = ""
-latest_end_date = ""
+earliest_start_date = 0
+latest_end_date = 0
 
 def getDate(text, line) :
     date = text[line].split(", ", 1)[0]
@@ -30,12 +30,13 @@ def getDate(text, line) :
         date = 10000 * int(date[2]) + 100 * int(date[1]) + int(date[0])
     else :
         date = -1
+    # print(date)
     return date
 
-def getStart(text) :
+def getStartDate(text) :
     return getDate(text, 0)
 
-def getEnd(text) :
+def getEndDate(text) :
     return(getDate(text,-1))
 
 if len(files) > 0 :
@@ -49,8 +50,8 @@ if len(files) > 0 :
     for i in range(len(files)) :
         new_file = open(root_dir + "/data/" + folder_to_merge + "/" + files[i], encoding = 'utf-8-sig')
         all_lines = new_file.readlines()
-        new_start.append(getStart(all_lines))
-        new_end.append(getEnd(all_lines))
+        new_start.append(getStartDate(all_lines))
+        new_end.append(getEndDate(all_lines))
         new_file.close()
 
     # Choose the earliest start date for the first file
@@ -86,6 +87,9 @@ if len(files) > 0 :
             old_start = new_start[new_index]
             old_end = new_end[new_index]
                
+            if i == len(new_start) - 1 :
+                latest_end_date = old_end
+
             print(str(i+2) + ": " + files[new_index] + " (" + str(old_start) + " - " + str(old_end) + ").")
 
             files.pop(new_index)
@@ -111,7 +115,7 @@ if len(files) > 0 :
     merged_files = open(root_dir + "/data/input/" + folder_to_merge + "_" + str(earliest_start_date) + "-" + str(latest_end_date) + ".txt", "w+", encoding = 'utf-8-sig')
     merged_files.writelines(x1_lines)
     merged_files_lines = x1_lines
-    merged_files_end = getEnd(x1_lines)
+    merged_files_end = getEndDate(x1_lines)
     
     print("New file loaded and first file written.")
 
@@ -119,7 +123,7 @@ if len(files) > 0 :
     for i in range(len(files)) :
         x2 = open(root_dir + "/data/" + folder_to_merge + "/" + files[i], encoding = 'utf-8-sig')
         x2_lines = x2.readlines()
-        x2_end = getEnd(x2_lines)
+        x2_end = getEndDate(x2_lines)
         
         print(files[i] + " loaded.")
 
