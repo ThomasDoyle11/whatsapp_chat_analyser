@@ -18,7 +18,9 @@ dateFormat = re.compile("\d{2}/\d{2}/\d{4}")
 
 files = os.listdir(root_dir + "/data/" + folder_to_merge + "/")
 
-print("Total of " + str(len(files)) + " files to be merged.")
+print("Total of " + str(len(files)) + " files to be merged:")
+for i in range(len(files)) :
+    print(str(i+1) + ": " + files[i])
 
 earliest_start_date = 0
 latest_end_date = 0
@@ -43,58 +45,51 @@ if len(files) > 0 :
     # Find earliest file
 
     # Decide the new_order the files will be merged in
-    print("Deciding order to merge in.")
+    print("\nDeciding order to merge in.")
     new_order = []
-    new_start = []
-    new_end = []
+    start_dates = []
+    end_dates = []
     for i in range(len(files)) :
         new_file = open(root_dir + "/data/" + folder_to_merge + "/" + files[i], encoding = 'utf-8-sig')
         all_lines = new_file.readlines()
-        new_start.append(getStartDate(all_lines))
-        new_end.append(getEndDate(all_lines))
+        start_dates.append(getStartDate(all_lines))
+        end_dates.append(getEndDate(all_lines))
         new_file.close()
 
-    # Choose the earliest start date for the first file
+    # Choose the earliest start date for the first file, and if two files have equal start date, choose the one with the latest end date
     new_index = 0
-    for i in range(len(new_start) - 1) :
-        if new_start[i+1] < new_start[new_index] or (new_start[i+1] == new_start[new_index] and new_end[i+1] > new_end[new_index]) :
+    for i in range(len(start_dates) - 1) :
+        if start_dates[i+1] < start_dates[new_index] or (start_dates[i+1] == start_dates[new_index] and end_dates[i+1] > end_dates[new_index]) :
             new_index = i + 1
     new_order.append(files[new_index])
-    old_start = new_start[new_index]
-    old_end = new_end[new_index]
+    previous_end_date = end_dates[new_index]
 
     print("\nFile order:")
-    print("1: " + files[new_index] + " (" + str(old_start) + " - " + str(old_end) + ").")
-    earliest_start_date = old_start
+    print("1: " + files[new_index] + " (" + str(start_dates[new_index]) + " - " + str(end_dates[new_index]) + ").")
+    earliest_start_date = start_dates[new_index]
 
     files.pop(new_index)
-    new_start.pop(new_index)
-    new_end.pop(new_index)
+    start_dates.pop(new_index)
+    end_dates.pop(new_index)
 
-    # Maximise the difference in end dates for subsequent files, ensuring that the next file's start date is before the previous files endate
-    for i in range(len(new_start)) :
+    # Maximise the difference in end dates for subsequent files, ensuring that the next file's start date is before or equal to the previous files endate
+    for i in range(len(start_dates)) :
         new_index = 0
         new_length = 0
-        for j in range(len(new_start)) :
-            if old_end > new_start[j] and new_end[j] - old_end > new_length :
+        for j in range(len(start_dates)) :
+            if previous_end_date >= start_dates[j] and end_dates[j] - previous_end_date > new_length :
                 new_index = j
-                new_length = new_end[j] - old_end
-        if new_length == 0 :
-            latest_end_date = old_end
-            break
-        else :
+                new_length = end_dates[j] - previous_end_date
+        if new_length > 0 :
             new_order.append(files[new_index])
-            old_start = new_start[new_index]
-            old_end = new_end[new_index]
-               
-            if i == len(new_start) - 1 :
-                latest_end_date = old_end
+            previous_end_date = end_dates[new_index]
 
-            print(str(i+2) + ": " + files[new_index] + " (" + str(old_start) + " - " + str(old_end) + ").")
+            print(str(i+2) + ": " + files[new_index] + " (" + str(start_dates[new_index]) + " - " + str(end_dates[new_index]) + ").")
 
             files.pop(new_index)
-            new_start.pop(new_index)
-            new_end.pop(new_index)
+            start_dates.pop(new_index)
+            end_dates.pop(new_index)
+    latest_end_date = previous_end_date
 
     files = new_order
 
@@ -109,15 +104,15 @@ if len(files) > 0 :
 
     print("\n" + files[0] + " loaded.")
 
-    files.pop(0)
-
     # Load and empty the merged file and add the first file
     merged_files = open(root_dir + "/data/input/" + folder_to_merge + "_" + str(earliest_start_date) + "-" + str(latest_end_date) + ".txt", "w+", encoding = 'utf-8-sig')
     merged_files.writelines(x1_lines)
     merged_files_lines = x1_lines
     merged_files_end = getEndDate(x1_lines)
     
-    print("New file loaded and first file written.")
+    print(files[0] + " merged.")
+
+    files.pop(0)
 
     # Add subsequent files at the correct point
     for i in range(len(files)) :
@@ -130,11 +125,11 @@ if len(files) > 0 :
         passed_date = False
         for j in range(len(x2_lines)) :
             x2_date = getDate(x2_lines,j)
-            if (passed_date == False and x2_date > merged_files_end) :
+            if (not passed_date and x2_date > merged_files_end) :
                 passed_date = True
             if passed_date :
                 merged_files.write(x2_lines[j])
-            if (passed_date == False and x2_date == merged_files_end) :
+            if (not passed_date and x2_date == merged_files_end) :
                 if (x2_lines[j] == merged_files_lines[-1]) :
                     passed_date = True
                     
