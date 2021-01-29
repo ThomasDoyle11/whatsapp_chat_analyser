@@ -8,6 +8,10 @@ I took on this project when I was curious about my 'chats' with my acquaintances
 
 WhatsApp allows users to export their chats as a .txt file where each line is of the format `[date], [time] - [sender]: [message]`, where `date` is of the `dd/mm/yyyy` format and `time` is of the the 24-hour `hh:mm` format. However, WhatsApp only allows the user to export the last 40,000 messages, thus if you want to export a chat with more messages, you're out of luck unless you plan ahead. And plan ahead I did, ensuring that at least once a year I'd do a backup of any chats I'd like to have an extended history of. And to ease the joining of these overlapping chat histories, one can use the **MergeFiles.py** file. Once the messages are all stored in a single .txt file, they can then be used as input into the **ChatToCSV.py** file, which converts the messages into a format more useful for analysis.
 
+## data
+
+This folder contains all input and output data for the scripts. Go to this folder for more information.
+
 ## MergeFiles.py
 
 This script allows the user to select a folder containing multiple Whatsapp .txt files, and will output a single WhatsApp .txt from the earliest start date of the files to the latest end date, provided that there are no gaps in the history.
