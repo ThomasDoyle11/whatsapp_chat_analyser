@@ -26,7 +26,7 @@ This file takes a single .txt file of the WhatsApp chat format, and encodes each
 
 The *example* column uses the word 'wowzers' from the following line of a WhatsApp .txt file, assuming it is the 34th line in the chat, and a total of 187 words are in all the prior messages.
 
-`21/01/2021, 16:52 - Joe Swanson: I like to say the word 'wowzer'`
+`21/01/2021, 16:52 - Joe Swanson: I like to say the word 'wowzers'`
 
 | Field Name | Description | Example |
 | --- | --- | --- |
