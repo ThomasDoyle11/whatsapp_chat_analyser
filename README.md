@@ -31,7 +31,7 @@ The *example* column uses the word 'wowzers' from the following line of a WhatsA
 | Field Name | Description | Example |
 | --- | --- | --- |
 | Word | The word that is being recorded | wowzers |
-| Sender | The name of the message sender | JoeSwanson |
+| Sender | The name of the message sender\* | JoeSwanson |
 | Hour | The hour that the message was sent | 16 |
 | Minute | The minute that the message was sent | 52 |
 | Day | The day that the message was sent | 21 |
@@ -40,6 +40,8 @@ The *example* column uses the word 'wowzers' from the following line of a WhatsA
 | Message | The location of the message from the start of the file | 34 |
 | Location | The location of the word from the start of the message | 7 |
 | AbsoluteLocation | The location of the word from the start of the file | 194 |
+
+\* Sender names are stripped of all spaces and non-alphanumeric characters.
 
 An example of a full .csv file can be found [here](https://github.com/ThomasDoyle11/whatsapp_chat_analyser/blob/master/data/output/ganrer_20140723-20140807_CSV.csv).
 
