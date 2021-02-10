@@ -45,8 +45,8 @@ The *example* column uses the word 'wowzers' from the following line of a WhatsA
 
 An example of a full .csv file can be found [here](./data/output/ganrer_20140723-20140807_CSV.csv).
 
-The script only records alphanumeric characters and acts as if any other characters are not there, such as commas, hyphens, emojis or apostrophes. There are two output files: one with all the words from the messages, and one which omits 'stopwords', where a stopword is a 'word which does not add much meaning to a sentence', such as 'the', 'is', 'and' and 'at'. The former is good for more generic analysis, such as total words sent or average words per message, and the latter is better for more specific analysis, such as most common words sent, where uninteresting words don't clog up the analysis.
+The script is case-insensitive only records alphanumeric characters and acts as if any other characters are not there, such as commas, hyphens, emojis or apostrophes. There are two output files: one with all the words from the messages, and one which omits 'stopwords', where a stopword is a 'word which does not add much meaning to a sentence', such as 'the', 'is', 'and' and 'at'. The former is good for more generic analysis, such as total words sent or average words per message, and the latter is better for more specific analysis, such as most common words sent, where uninteresting words don't clog up the analysis.
 
 ### Limitiations
 
-The script will not detect if a participant changes their name at some point in the chat, as this is not recorded in the file, thus it will assume that the two different names are two different senders.
+The script will not detect if a participant changes their name at some point in the chat, as this is not recorded in the file, thus it will assume that the two different names are two different senders. The script also loses information by stripping non-alphanumeric characters and converting everything to lower case.
