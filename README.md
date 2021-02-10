@@ -18,7 +18,7 @@ This script allows the user to select a folder containing multiple Whatsapp .txt
 
 ### Limitations
 
-The input files MUST overlap by at least 1 day, otherwise the script will assume the two files do not belong to the same chat (this could be altered, but it was not neccessary for my needs). The scipt will also not detect if the files come from different chats, thus if they overlap, it will just merge two different chats.
+The input files MUST overlap by at least 1 day, otherwise the script will assume the two files do not belong to the same chat (this could be altered, but it was not neccessary for my needs). The script will also not detect if the files come from different chats, thus if they overlap, it will just merge two different chats.
 
 ## ChatToCSV.py
 
@@ -43,7 +43,7 @@ The *example* column uses the word 'wowzers' from the following line of a WhatsA
 
 \* Sender names are stripped of all spaces and non-alphanumeric characters.
 
-An example of a full .csv file can be found [here](https://github.com/ThomasDoyle11/whatsapp_chat_analyser/blob/master/data/output/ganrer_20140723-20140807_CSV.csv).
+An example of a full .csv file can be found [here](./data/output/ganrer_20140723-20140807_CSV.csv).
 
 The script only records alphanumeric characters and acts as if any other characters are not there, such as commas, hyphens, emojis or apostrophes. There are two output files: one with all the words from the messages, and one which omits 'stopwords', where a stopword is a 'word which does not add much meaning to a sentence', such as 'the', 'is', 'and' and 'at'. The former is good for more generic analysis, such as total words sent or average words per message, and the latter is better for more specific analysis, such as most common words sent, where uninteresting words don't clog up the analysis.
 
